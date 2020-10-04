@@ -24,9 +24,6 @@ LCD_LINE_2 = 0xC0  # LCD RAM address for the 2nd line
 E_PULSE = 0.0005
 E_DELAY = 0.0005
 
-LCD_LINE_1 = 0x80  # LCD RAM address for the 1st line
-LCD_LINE_2 = 0xC0  # LCD RAM address for the 2nd line
-
 
 class RPiLcd:
     def __init__(
@@ -51,6 +48,15 @@ class RPiLcd:
         self._lcd_string(txt, LCD_LINE_1 if line_no == 1 else LCD_LINE_2)
 
     def _lcd_init(self):
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BCM)  # Use BCM GPIO numbers
+        GPIO.setup(self._gpio_lcd_e, GPIO.OUT)  # E
+        GPIO.setup(self._gpio_lcd_rs, GPIO.OUT)  # RS
+        GPIO.setup(self._gpio_lcd_d4, GPIO.OUT)  # DB4
+        GPIO.setup(self._gpio_lcd_d5, GPIO.OUT)  # DB5
+        GPIO.setup(self._gpio_lcd_d6, GPIO.OUT)  # DB6
+        GPIO.setup(self._gpio_lcd_d7, GPIO.OUT)  # DB7
+
         # Initialise display
         self._lcd_byte(0x33, LCD_CMD)  # 110011 Initialise
         self._lcd_byte(0x32, LCD_CMD)  # 110010 Initialise
