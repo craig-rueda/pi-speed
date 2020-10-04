@@ -1,26 +1,14 @@
-import importlib.util
 from json import dumps, loads
+import re
 import ssl
 
-import re
-
 import click
+from monitor.lcd import RPiLcd
 import requests
 from websocket import WebSocketApp
 
-try:
-    importlib.util.find_spec("RPi.GPIO")
-    import RPi.GPIO as GPIO
-except ImportError:
-    """
-    import FakeRPi.GPIO as GPIO
-    OR
-    import FakeRPi.RPiO as RPiO
-    """
-    import FakeRPi.GPIO as GPIO
-
 MESSAGE_SIZE_RE = re.compile("^([0-9]+)\n(.*)", re.S)
-KbPS = float(1000)
+KbPS = float(1024)
 MbPS = float(KbPS ** 2)  # 1,000,000
 GbPS = float(KbPS ** 3)  # 1,000,000,000
 
@@ -30,7 +18,9 @@ class InvalidLoginException(Exception):
 
 
 class Monitor:
-    def __init__(self, router_url: str, monitor_if: str, username: str, password: str) -> None:
+    def __init__(
+        self, router_url: str, monitor_if: str, username: str, password: str
+    ) -> None:
         self._router_url = router_url
         self._username = username
         self._password = password
@@ -39,6 +29,7 @@ class Monitor:
         self._ws: WebSocketApp = None
         self._remaining_bytes = 0
         self._partial_message = ""
+        self._lcd = RPiLcd()
 
     def on_ws_message(self, message: str):
         if self._remaining_bytes:
@@ -82,24 +73,25 @@ class Monitor:
         if interfaces:
             interface = interfaces[self._monitor_if]
             stats = interface["stats"]
-            rx_bps = int(stats["rx_bps"])
-            tx_bps = int(stats["tx_bps"])
+            rx_bps = int(stats["rx_bps"]) * 10
+            tx_bps = int(stats["tx_bps"]) * 10
 
             self._update_output(rx_bps, tx_bps)
 
     def _update_output(self, rx_bps: int, tx_bps: int):
-        print(f"Up: {self._human_bps(tx_bps)} ({tx_bps}) Dn: {self._human_bps(rx_bps)} ({rx_bps})")
+        self._lcd.set_line_txt(f"Up: {self._human_bps(rx_bps)}", 1)
+        self._lcd.set_line_txt(f"Dn: {self._human_bps(tx_bps)}", 2)
 
     @staticmethod
     def _human_bps(bps: int):
         if bps < KbPS:
-            return '{0} bps'.format(bps)
+            return "{0} bps".format(bps)
         elif KbPS <= bps < MbPS:
-            return '{0:.1f} Kbps'.format(bps / KbPS)
+            return "{0:.1f} Kbps".format(bps / KbPS)
         elif MbPS <= bps < GbPS:
-            return '{0:.1f} Mbps'.format(bps / MbPS)
+            return "{0:.1f} Mbps".format(bps / MbPS)
         else:
-            return '{0:.1f} Gbps'.format(bps / GbPS)
+            return "{0:.1f} Gbps".format(bps / GbPS)
 
     def on_ws_error(self, ws, error):
         print(error)
@@ -108,10 +100,7 @@ class Monitor:
         click.echo(click.style(f"Connection opened.", fg="green"))
         subscribe_data = dumps(
             {
-                "SUBSCRIBE": [
-                    {"name": "interfaces"},
-                    {"name": "system-stats"},
-                ],
+                "SUBSCRIBE": [{"name": "interfaces"}, {"name": "system-stats"}],
                 "UNSUBSCRIBE": [],
                 "SESSION_ID": self._session_id,
             }

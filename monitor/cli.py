@@ -17,9 +17,7 @@ def monitor():
     default="https://192.168.5.1",
     prompt="Base URL of your Ubiquiti router's admin console",
 )
-@click.option(
-    "--interface", default="eth9", prompt="Router interface to monitor"
-)
+@click.option("--interface", default="eth9", prompt="Router interface to monitor")
 @click.option(
     "--username", default="ubnt", prompt="Username to login to the admin console"
 )

@@ -4,8 +4,6 @@ from setuptools import find_packages, setup
 
 VERSION = "0.1.0"
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-#PACKAGE_DIR = os.path.join(PRESET_BASE_DIR, "in_monitor", "static")
-#PACKAGE_FILE = os.path.join(PACKAGE_DIR, "package.json")
 
 setup(
     name="pi_internet",
@@ -18,7 +16,8 @@ setup(
     scripts=["monitor/bin/in_monitor"],
     install_requires=[
         "click==7.1.2",
-        "fake-rpi @ git+https://github.com/sn4k3/FakeRPi@0f30d320d5f715d8a4fb94e7105448508586ae94",
+        "fake-rpi @ git+https://github.com/sn4k3"
+        "/FakeRPi@0f30d320d5f715d8a4fb94e7105448508586ae94",
         "requests==2.24.0",
         "websocket_client==0.57.0",
     ],
