@@ -73,8 +73,8 @@ class Monitor:
         if interfaces:
             interface = interfaces[self._monitor_if]
             stats = interface["stats"]
-            rx_bps = int(stats["rx_bps"]) * 10
-            tx_bps = int(stats["tx_bps"]) * 10
+            rx_bps = int(stats["rx_bps"]) * 8
+            tx_bps = int(stats["tx_bps"]) * 8
 
             self._update_output(rx_bps, tx_bps)
 
