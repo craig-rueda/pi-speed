@@ -18,13 +18,14 @@ def monitor():
     prompt="Base URL of your Ubiquiti router's admin console",
 )
 @click.option(
+    "--interface", default="eth9", prompt="Router interface to monitor"
+)
+@click.option(
     "--username", default="ubnt", prompt="Username to login to the admin console"
 )
 @click.option(
     "--password", default="ubnt", prompt="Password to login to the admin console"
 )
-def start(router_url: str, username: str, password: str):
-    click.echo(click.style(f"Connecting to {router_url}...", fg="green"))
-
-    m = Monitor(router_url, username, password)
+def start(router_url: str, interface: str, username: str, password: str):
+    m = Monitor(router_url, interface, username, password)
     m.login_and_connect()

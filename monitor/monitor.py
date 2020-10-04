@@ -1,7 +1,10 @@
 import importlib.util
-from json import dumps
+from json import dumps, loads
 import ssl
 
+import re
+
+import click
 import requests
 from websocket import WebSocketApp
 
@@ -16,33 +19,98 @@ except ImportError:
     """
     import FakeRPi.GPIO as GPIO
 
+MESSAGE_SIZE_RE = re.compile("^([0-9]+)\n(.*)", re.S)
+KbPS = float(1000)
+MbPS = float(KbPS ** 2)  # 1,000,000
+GbPS = float(KbPS ** 3)  # 1,000,000,000
+
 
 class InvalidLoginException(Exception):
     pass
 
 
 class Monitor:
-    def __init__(self, router_url: str, username: str, password: str) -> None:
+    def __init__(self, router_url: str, monitor_if: str, username: str, password: str) -> None:
         self._router_url = router_url
         self._username = username
         self._password = password
+        self._monitor_if = monitor_if
         self._session_id = ""
         self._ws: WebSocketApp = None
+        self._remaining_bytes = 0
+        self._partial_message = ""
 
-    def on_ws_message(self, message):
-        print(message)
+    def on_ws_message(self, message: str):
+        if self._remaining_bytes:
+            curr_msg, message = self._gobble_bytes(self._remaining_bytes, message)
+            self._partial_message += curr_msg
+            self._remaining_bytes -= len(curr_msg)
+
+        if self._remaining_bytes == 0:
+            if self._partial_message:
+                msg_to_handle = self._partial_message
+                self._partial_message = ""
+                self._handle_message(msg_to_handle)
+
+            m = MESSAGE_SIZE_RE.match(message)
+            while m:
+                msg_len = int(m.group(1))
+                curr_msg, message = self._gobble_bytes(msg_len, m.group(2))
+
+                if len(curr_msg) == msg_len:
+                    self._handle_message(curr_msg)
+                else:
+                    self._partial_message = curr_msg
+                    self._remaining_bytes = msg_len - len(curr_msg)
+
+                m = MESSAGE_SIZE_RE.match(message) if message else None
+
+    def _gobble_bytes(self, cnt: int, data: str):
+        if len(data) >= cnt:
+            gobbled = data[:cnt]
+            remaining = data[cnt:]
+        else:
+            gobbled = data
+            remaining = ""
+
+        return gobbled, remaining
+
+    def _handle_message(self, message: str):
+        data = loads(message)
+        interfaces = data.get("interfaces")
+
+        if interfaces:
+            interface = interfaces[self._monitor_if]
+            stats = interface["stats"]
+            rx_bps = int(stats["rx_bps"])
+            tx_bps = int(stats["tx_bps"])
+
+            self._update_output(rx_bps, tx_bps)
+
+    def _update_output(self, rx_bps: int, tx_bps: int):
+        print(f"Up: {self._human_bps(tx_bps)} ({tx_bps}) Dn: {self._human_bps(rx_bps)} ({rx_bps})")
+
+    @staticmethod
+    def _human_bps(bps: int):
+        if bps < KbPS:
+            return '{0} bps'.format(bps)
+        elif KbPS <= bps < MbPS:
+            return '{0:.1f} Kbps'.format(bps / KbPS)
+        elif MbPS <= bps < GbPS:
+            return '{0:.1f} Mbps'.format(bps / MbPS)
+        else:
+            return '{0:.1f} Gbps'.format(bps / GbPS)
 
     def on_ws_error(self, ws, error):
         print(error)
 
     def on_ws_open(self):
-        print("### opened ###")
+        click.echo(click.style(f"Connection opened.", fg="green"))
         subscribe_data = dumps(
             {
                 "SUBSCRIBE": [
                     {"name": "interfaces"},
                     {"name": "system-stats"},
-                    {"name": "pon-stats"},
                 ],
                 "UNSUBSCRIBE": [],
                 "SESSION_ID": self._session_id,
@@ -50,12 +118,14 @@ class Monitor:
         )
         subscribe_frame = f"{len(subscribe_data)}\n{subscribe_data}"
         self._ws.send(subscribe_frame)
-        print("### subscribed ###")
+        click.echo(click.style(f"Subscribed.", fg="green"))
 
     def on_ws_close(self, ws):
-        print("### closed ###")
+        click.echo(click.style(f"Connection closed. Reconnecting...", fg="red"))
+        self.login_and_connect()
 
     def login_and_connect(self):
+        click.echo(click.style(f"Connecting to {self._router_url}...", fg="green"))
         r = requests.post(
             self._router_url,
             {"username": self._username, "password": self._password},

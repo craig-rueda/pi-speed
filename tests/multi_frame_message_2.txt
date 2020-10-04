@@ -1,0 +1,512 @@
+        "rx_packets": "0",
+                "tx_packets": "1",
+                "rx_bytes": "0",
+                "tx_bytes": "110",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "eth3": {
+            "up": "true",
+            "l1up": "false",
+            "autoneg": "true",
+            "duplex": "half",
+            "speed": "10",
+            "on_switch": "true",
+            "is_switched_port": "true",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:cc",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "1",
+                "rx_bytes": "0",
+                "tx_bytes": "110",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "eth2": {
+            "up": "true",
+            "l1up": "false",
+            "autoneg": "true",
+            "duplex": "half",
+            "speed": "10",
+            "on_switch": "true",
+            "is_switched_port": "true",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:cb",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "1",
+                "rx_bytes": "0",
+                "tx_bytes": "110",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "eth1": {
+            "up": "true",
+            "l1up": "true",
+            "autoneg": "true",
+            "duplex": "full",
+            "speed": "1000",
+            "on_switch": "true",
+            "is_switched_port": "true",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:ca",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "11884797",
+                "tx_packets": "22135154",
+                "rx_bytes": "1849347827",
+                "tx_bytes": "4396082744",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "41",
+                "rx_bps": "3630",
+                "tx_bps": "3601"
+            }
+        },
+        "eth0": {
+            "up": "true",
+            "l1up": "false",
+            "autoneg": "true",
+            "duplex": "half",
+            "speed": "10",
+            "on_switch": "true",
+            "is_switched_port": "true",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:c9",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "1",
+                "rx_bytes": "0",
+                "tx_bytes": "110",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "imq0": {
+            "up": "true",
+            "l1up": "true",
+            "mtu": "16000",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "itf": {
+            "up": "true",
+            "l1up": "true",
+            "mac": "74:83:c2:1a:55:c8",
+            "mtu": "9000",
+            "stats": {
+                "rx_packets": "344253133",
+                "tx_packets": "452878148",
+                "rx_bytes": "218487114303",
+                "tx_bytes": "453255535507",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "24425",
+                "tx_dropped": "773",
+                "multicast": "2326281",
+                "rx_bps": "8213",
+                "tx_bps": "5364"
+            }
+        },
+        "loop3": {
+            "up": "false",
+            "l1up": "false",
+            "mac": "96:22:e3:3a:7f:84",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "loop2": {
+            "up": "false",
+            "l1up": "false",
+            "mac": "96:f1:83:f5:10:7a",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "loop1": {
+            "up": "false",
+            "l1up": "false",
+            "mac": "4e:b1:6c:c0:c1:19",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "loop0": {
+            "up": "false",
+            "l1up": "false",
+            "mac": "8a:05:a3:5d:ba:40",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "npi3": {
+            "up": "false",
+            "l1up": "false",
+            "mac": "f6:92:ff:98:34:db",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "npi2": {
+            "up": "false",
+            "l1up": "false",
+            "mac": "ae:0f:cb:be:92:ab",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "npi1": {
+            "up": "false",
+            "l1up": "false",
+            "mac": "56:02:c3:2e:16:fc",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "npi0": {
+            "up": "false",
+            "l1up": "false",
+            "mac": "8a:c2:82:fb:be:e4",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "itf3": {
+            "up": "true",
+            "l1up": "true",
+            "mac": "74:83:c2:1a:55:c8",
+            "mtu": "9000",
+            "stats": {
+                "rx_packets": "82894447",
+                "tx_packets": "115210627",
+                "rx_bytes": "53274516372",
+                "tx_bytes": "109901334857",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "6077",
+                "tx_dropped": "709",
+                "multicast": "228023",
+                "rx_bps": "3129",
+                "tx_bps": "380"
+            }
+        },
+        "itf2": {
+            "up": "true",
+            "l1up": "true",
+            "mac": "74:83:c2:1a:55:c8",
+            "mtu": "9000",
+            "stats": {
+                "rx_packets": "91147092",
+                "tx_packets": "113316210",
+                "rx_bytes": "59726492094",
+                "tx_bytes": "113658430061",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "5518",
+                "tx_dropped": "0",
+                "multicast": "824753",
+                "rx_bps": "423",
+                "tx_bps": "572"
+            }
+        },
+        "itf1": {
+            "up": "true",
+            "l1up": "true",
+            "mac": "74:83:c2:1a:55:c8",
+            "mtu": "9000",
+            "stats": {
+                "rx_packets": "91537778",
+                "tx_packets": "119150481",
+                "rx_bytes": "57553641082",
+                "tx_bytes": "122173205484",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "6853",
+                "tx_dropped": "33",
+                "multicast": "493690",
+                "rx_bps": "2559",
+                "tx_bps": "2401"
+            }
+        },
+        "itf0": {
+            "up": "true",
+            "l1up": "true",
+            "mac": "74:83:c2:1a:55:c8",
+            "mtu": "9000",
+            "stats": {
+                "rx_packets": "78673860",
+                "tx_packets": "105200830",
+                "rx_bytes": "47932470187",
+                "tx_bytes": "107522565105",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "5977",
+                "tx_dropped": "31",
+                "multicast": "779843",
+                "rx_bps": "2102",
+                "tx_bps": "2010"
+            }
+        },
+        "eth9": {
+            "up": "true",
+            "l1up": "true",
+            "autoneg": "true",
+            "duplex": "full",
+            "speed": "1000",
+            "on_switch": "false",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:c7",
+            "mtu": "1500",
+            "addresses": [
+                "99.152.117.124\/22"
+            ],
+            "stats": {
+                "rx_packets": "729384254",
+                "tx_packets": "409556697",
+                "rx_bytes": "840488091987",
+                "tx_bytes": "253959190103",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "47764",
+                "tx_dropped": "49858",
+                "multicast": "37787",
+                "rx_bps": "247359",
+                "tx_bps": "26024"
+            }
+        },
+        "eth8": {
+            "up": "true",
+            "l1up": "true",
+            "autoneg": "true",
+            "duplex": "full",
+            "speed": "1000",
+            "on_switch": "false",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:c6",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "109116585",
+                "tx_packets": "323579798",
+                "rx_bytes": "48576576193",
+                "tx_bytes": "395918671204",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "4910",
+                "tx_dropped": "0",
+                "multicast": "600683",
+                "rx_bps": "29977",
+                "tx_bps": "265506"
+            }
+        },
+        "eth10": {
+            "up": "true",
+            "l1up": "false",
+            "autoneg": "true",
+            "duplex": "half",
+            "speed": "10",
+            "on_switch": "false",
+            "is_combo": "false",
+            "is_sfp": "true",
+            "sfp_present": "false",
+            "mac": "74:83:c2:1a:55:c5",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "eth11": {
+            "up": "true",
+            "l1up": "false",
+            "autoneg": "true",
+            "duplex": "half",
+            "speed": "10",
+            "on_switch": "false",
+            "is_combo": "false",
+            "is_sfp": "true",
+            "sfp_present": "false",
+            "mac": "74:83:c2:1a:55:c4",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "0",
+                "rx_bytes": "0",
+                "tx_bytes": "0",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "lo": {
+            "up": "true",
+            "l1up": "true",
+            "mac": "00:00:00:00:00:00",
+            "mtu": "65536",
+            "addresses": [
+                "127.0.0.1\/8",
+                "::1\/128"
+            ],
+            "stats": {
+                "rx_packets": "1220181",
+                "tx_packets": "1220181",
+                "rx_bytes": "135081217",
+                "tx_bytes": "135081217",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        }
+    }
+}

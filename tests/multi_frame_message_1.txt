@@ -1,0 +1,136 @@
+19665
+{
+    "interfaces": {
+        "br0": {
+            "up": "true",
+            "l1up": "true",
+            "mac": "74:83:c2:1a:55:c6",
+            "mtu": "1500",
+            "addresses": [
+                "192.168.5.1\/24"
+            ],
+            "stats": {
+                "rx_packets": "452559973",
+                "tx_packets": "432980534",
+                "rx_bytes": "256176226322",
+                "tx_bytes": "447949226048",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "34625",
+                "tx_bps": "25966"
+            }
+        },
+        "switch0": {
+            "up": "true",
+            "l1up": "true",
+            "mac": "74:83:c2:1a:55:c8",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "344228578",
+                "tx_packets": "452751974",
+                "rx_bytes": "210905700165",
+                "tx_bytes": "451440435647",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "2326226",
+                "rx_bps": "7399",
+                "tx_bps": "5206"
+            }
+        },
+        "eth7": {
+            "up": "true",
+            "l1up": "true",
+            "autoneg": "true",
+            "duplex": "full",
+            "speed": "1000",
+            "on_switch": "true",
+            "is_switched_port": "true",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:d0",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "206035792",
+                "tx_packets": "307321341",
+                "rx_bytes": "7060162512414",
+                "tx_bytes": "101550248292197",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "2373",
+                "tx_bps": "1286"
+            }
+        },
+        "eth6": {
+            "up": "true",
+            "l1up": "true",
+            "autoneg": "true",
+            "duplex": "full",
+            "speed": "1000",
+            "on_switch": "true",
+            "is_switched_port": "true",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:cf",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "163843237",
+                "tx_packets": "185022466",
+                "rx_bytes": "1252295429781501",
+                "tx_bytes": "728606703832497",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "14",
+                "rx_bps": "1785",
+                "tx_bps": "1099"
+            }
+        },
+        "eth5": {
+            "up": "true",
+            "l1up": "false",
+            "autoneg": "true",
+            "duplex": "half",
+            "speed": "10",
+            "on_switch": "true",
+            "is_switched_port": "true",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:ce",
+            "mtu": "1500",
+            "stats": {
+                "rx_packets": "0",
+                "tx_packets": "1",
+                "rx_bytes": "0",
+                "tx_bytes": "90",
+                "rx_errors": "0",
+                "tx_errors": "0",
+                "rx_dropped": "0",
+                "tx_dropped": "0",
+                "multicast": "0",
+                "rx_bps": "0",
+                "tx_bps": "0"
+            }
+        },
+        "eth4": {
+            "up": "true",
+            "l1up": "false",
+            "autoneg": "true",
+            "duplex": "half",
+            "speed": "10",
+            "on_switch": "true",
+            "is_switched_port": "true",
+            "is_combo": "false",
+            "is_sfp": "false",
+            "mac": "74:83:c2:1a:55:cd",
+            "mtu": "1500",
+            "stats": {
+        
