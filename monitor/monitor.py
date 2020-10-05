@@ -25,11 +25,18 @@ class Monitor:
         self._username = username
         self._password = password
         self._monitor_if = monitor_if
+        self._lcd = RPiLcd()
+
+        self._init()
+
+    def _init(self):
+        if self._ws:
+            self._ws.close()
+
         self._session_id = ""
         self._ws: WebSocketApp = None
         self._remaining_bytes = 0
         self._partial_message = ""
-        self._lcd = RPiLcd()
 
     def on_ws_message(self, message: str):
         if self._remaining_bytes:
@@ -37,7 +44,10 @@ class Monitor:
             self._partial_message += curr_msg
             self._remaining_bytes -= len(curr_msg)
 
-        if self._remaining_bytes == 0:
+        if self._remaining_bytes <= 0:
+            # Something's not right here. Just reset...
+            self.login_and_connect()
+        elif self._remaining_bytes == 0:
             if self._partial_message:
                 msg_to_handle = self._partial_message
                 self._partial_message = ""
@@ -114,6 +124,8 @@ class Monitor:
         self.login_and_connect()
 
     def login_and_connect(self):
+        self._init()
+
         click.echo(click.style(f"Connecting to {self._router_url}...", fg="green"))
         r = requests.post(
             self._router_url,
