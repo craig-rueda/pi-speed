@@ -1,3 +1,4 @@
+import threading
 from json import dumps, loads
 import re
 import ssl
@@ -12,6 +13,7 @@ MESSAGE_SIZE_RE = re.compile("^([0-9]+)\n(.*)", re.S)
 KbPS = float(1000)
 MbPS = float(KbPS ** 2)  # 1,000,000
 GbPS = float(KbPS ** 3)  # 1,000,000,000
+RESTART_INT_SECS = 600  # Restart every 10min
 
 
 class InvalidLoginException(Exception):
@@ -22,6 +24,7 @@ class Monitor:
     def __init__(
         self, router_url: str, monitor_if: str, username: str, password: str
     ) -> None:
+        self._keepalive = False
         self._router_url = router_url
         self._username = username
         self._password = password
@@ -32,7 +35,19 @@ class Monitor:
         self._remaining_bytes = 0
         self._partial_message = ""
 
-    def _reset(self):
+        # The API only allows us to receive messages for 20min at a time,
+        # so this thread will periodically restart the connection
+        event = threading.Event()
+        thread = threading.Thread(
+            target=self._restart, args=(RESTART_INT_SECS, event)
+        )
+        thread.setDaemon(True)
+        thread.start()
+
+    def _restart(self):
+        if not self._keepalive:
+            return
+
         if self._ws:
             self._ws.close()
 
@@ -41,9 +56,9 @@ class Monitor:
         self._remaining_bytes = 0
         self._partial_message = ""
 
-    def on_ws_message(self, message: str):
-        console_log("Message received", color="yellow")
+        self.login_and_connect()
 
+    def on_ws_message(self, message: str):
         if self._remaining_bytes:
             curr_msg, message = self._gobble_bytes(self._remaining_bytes, message)
             self._partial_message += curr_msg
@@ -129,7 +144,7 @@ class Monitor:
         self.login_and_connect()
 
     def login_and_connect(self):
-        self._reset()
+        self._keepalive = True
 
         console_log(f"Connecting to {self._router_url}...")
         r = requests.post(
