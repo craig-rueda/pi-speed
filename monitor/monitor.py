@@ -8,7 +8,7 @@ import requests
 from websocket import WebSocketApp
 
 MESSAGE_SIZE_RE = re.compile("^([0-9]+)\n(.*)", re.S)
-KbPS = float(1024)
+KbPS = float(1000)
 MbPS = float(KbPS ** 2)  # 1,000,000
 GbPS = float(KbPS ** 3)  # 1,000,000,000
 
