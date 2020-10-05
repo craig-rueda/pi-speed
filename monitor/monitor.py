@@ -42,6 +42,8 @@ class Monitor:
         self._partial_message = ""
 
     def on_ws_message(self, message: str):
+        console_log("Message received", color="yellow")
+
         if self._remaining_bytes:
             curr_msg, message = self._gobble_bytes(self._remaining_bytes, message)
             self._partial_message += curr_msg
