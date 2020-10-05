@@ -3,6 +3,8 @@ from json import dumps, loads
 import re
 import ssl
 
+import time
+
 from monitor.lcd import RPiLcd
 import requests
 from websocket import WebSocketApp
@@ -37,26 +39,26 @@ class Monitor:
 
         # The API only allows us to receive messages for 20min at a time,
         # so this thread will periodically restart the connection
-        event = threading.Event()
-        thread = threading.Thread(
-            target=self._restart, args=(RESTART_INT_SECS, event)
-        )
+        thread = threading.Thread(target=self._restart_run)
         thread.setDaemon(True)
         thread.start()
 
-    def _restart(self):
-        if not self._keepalive:
-            return
+    def _restart_run(self):
+        while True:
+            time.sleep(RESTART_INT_SECS)
 
-        if self._ws:
-            self._ws.close()
+            if not self._keepalive:
+                continue
 
-        self._session_id = ""
-        self._ws: WebSocketApp = None
-        self._remaining_bytes = 0
-        self._partial_message = ""
+            if self._ws:
+                self._ws.close()
 
-        self.login_and_connect()
+            self._session_id = ""
+            self._ws: WebSocketApp = None
+            self._remaining_bytes = 0
+            self._partial_message = ""
+
+            self.login_and_connect()
 
     def on_ws_message(self, message: str):
         if self._remaining_bytes:
