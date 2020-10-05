@@ -2,10 +2,11 @@ from json import dumps, loads
 import re
 import ssl
 
-import click
 from monitor.lcd import RPiLcd
 import requests
 from websocket import WebSocketApp
+
+from monitor.util import console_log
 
 MESSAGE_SIZE_RE = re.compile("^([0-9]+)\n(.*)", re.S)
 KbPS = float(1000)
@@ -109,7 +110,7 @@ class Monitor:
         print(error)
 
     def on_ws_open(self):
-        click.echo(click.style(f"Connection opened.", fg="green"))
+        console_log("Connection opened.")
         subscribe_data = dumps(
             {
                 "SUBSCRIBE": [{"name": "interfaces"}, {"name": "system-stats"}],
@@ -119,16 +120,16 @@ class Monitor:
         )
         subscribe_frame = f"{len(subscribe_data)}\n{subscribe_data}"
         self._ws.send(subscribe_frame)
-        click.echo(click.style(f"Subscribed.", fg="green"))
+        console_log("Subscribed.")
 
     def on_ws_close(self, ws):
-        click.echo(click.style(f"Connection closed. Reconnecting...", fg="red"))
+        console_log("Connection closed. Reconnecting...", color="red")
         self.login_and_connect()
 
     def login_and_connect(self):
         self._reset()
 
-        click.echo(click.style(f"Connecting to {self._router_url}...", fg="green"))
+        console_log(f"Connecting to {self._router_url}...")
         r = requests.post(
             self._router_url,
             {"username": self._username, "password": self._password},
