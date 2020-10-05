@@ -46,7 +46,7 @@ class Monitor:
             self._partial_message += curr_msg
             self._remaining_bytes -= len(curr_msg)
 
-        if self._remaining_bytes <= 0:
+        if self._remaining_bytes < 0:
             # Something's not right here. Just reset...
             self.login_and_connect()
         elif self._remaining_bytes == 0:
