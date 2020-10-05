@@ -26,10 +26,12 @@ class Monitor:
         self._password = password
         self._monitor_if = monitor_if
         self._lcd = RPiLcd()
+        self._session_id = ""
+        self._ws: WebSocketApp = None
+        self._remaining_bytes = 0
+        self._partial_message = ""
 
-        self._init()
-
-    def _init(self):
+    def _reset(self):
         if self._ws:
             self._ws.close()
 
@@ -124,7 +126,7 @@ class Monitor:
         self.login_and_connect()
 
     def login_and_connect(self):
-        self._init()
+        self._reset()
 
         click.echo(click.style(f"Connecting to {self._router_url}...", fg="green"))
         r = requests.post(
