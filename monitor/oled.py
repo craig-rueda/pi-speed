@@ -46,7 +46,7 @@ class RpiOled:
         y_pos = (line_idx * LINE_HEIGHT) + self._top
 
         # First, clear the line
-        self._draw.rectangle((0, y_pos, self._width, LINE_HEIGHT), outline=0, fill=0)
+        self._draw.rectangle((0, y_pos, self._width, LINE_HEIGHT + self._top), outline=0, fill=0)
         # Next, write out our text
         self._draw.text((0, y_pos), txt, font=self._font, fill=255)
         # Lastly, actually write the thing out
