@@ -12,7 +12,7 @@ from websocket import WebSocketApp
 from monitor.util import console_log
 
 MESSAGE_SIZE_RE = re.compile("^([0-9]+)\n(.*)", re.S)
-ADDRESS_RE=re.compile("([^/]+)")
+ADDRESS_RE = re.compile("([^/]+)")
 KbPS = float(1000)
 MbPS = float(KbPS ** 2)  # 1,000,000
 GbPS = float(KbPS ** 3)  # 1,000,000,000

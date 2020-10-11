@@ -20,7 +20,7 @@ class RpiOled:
         # Clear display.
         self._disp.clear()
         self._disp.display()
-        self._line_heights = [16, 20, 20]
+        self._line_heights = [16, 24, 24]
 
         # Create blank image for drawing.
         # Make sure to create image with mode '1' for 1-bit color.
@@ -31,16 +31,19 @@ class RpiOled:
         # Get drawing object to draw on image.
         self._draw = ImageDraw.Draw(self._image)
 
-        # self._font = ImageFont.load_default()
-        # Grabbed font from: http://www.dafont.com/bitmap.php
-        self._font = ImageFont.truetype(
-            f"{path.dirname(__file__)}/Retron2000.ttf", 14
-        )
+        self._font_top_row = self._build_font(12)
+        self._font = self._build_font(14)
 
         self._top = PADDING
         self._bottom = self._height - PADDING
 
         self._clear_screen()
+
+    @staticmethod
+    def _build_font(size: int):
+        # self._font = ImageFont.load_default()
+        # Grabbed font from: http://www.dafont.com/bitmap.php
+        return ImageFont.truetype(f"{path.dirname(__file__)}/Retron2000.ttf", size)
 
     def _clear_screen(self):
         # Draw a black filled box to clear the image.
@@ -53,7 +56,12 @@ class RpiOled:
         for idx, line in enumerate(lines):
             line_height = self._line_heights[idx]
             y_pos = self._top + (idx * line_height)
-            self._draw.text((0, y_pos), line, font=self._font, fill=255)
+            self._draw.text(
+                (0, y_pos),
+                line,
+                font=self._font_top_row if idx == 0 else self._font,
+                fill=255,
+            )
 
         # Lastly, actually write the thing out
         self._disp.image(self._image)
