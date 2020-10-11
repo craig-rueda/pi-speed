@@ -1,14 +1,15 @@
+from os import path
+from typing import List
+
 from Adafruit_SSD1306 import SSD1306_128_32
 from PIL import Image, ImageDraw, ImageFont
 
 # Raspberry Pi pin configuration:
-from typing import List
-
 DC = 23
 SPI_PORT = 0
 SPI_DEVICE = 0
-PADDING = -1
-LINE_HEIGHT = 8
+PADDING = -2
+LINE_HEIGHT = 10
 
 
 class RpiOled:
@@ -29,11 +30,11 @@ class RpiOled:
         # Get drawing object to draw on image.
         self._draw = ImageDraw.Draw(self._image)
 
-        self._font = ImageFont.load_default()
-        # Alternatively load a TTF font.  Make sure the .ttf font file
-        # is in the same directory as the python script!
-        # Some other nice fonts to try: http://www.dafont.com/bitmap.php
-        # font = ImageFont.truetype('Minecraftia.ttf', 8)
+        # self._font = ImageFont.load_default()
+        # Grabbed font from: http://www.dafont.com/bitmap.php
+        self._font = ImageFont.truetype(
+            f"{path.dirname(__file__)}/Retron2000.ttf", LINE_HEIGHT
+        )
 
         self._top = PADDING
         self._bottom = self._height - PADDING
