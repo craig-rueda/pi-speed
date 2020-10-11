@@ -6,6 +6,7 @@ DC = 23
 SPI_PORT = 0
 SPI_DEVICE = 0
 PADDING = -2
+LINE_HEIGHT = 8
 
 
 class RpiOled:
@@ -21,7 +22,7 @@ class RpiOled:
         # Make sure to create image with mode '1' for 1-bit color.
         self._width = self._disp.width
         self._height = self._disp.height
-        self._image = Image.new('1', (self._width, self._height))
+        self._image = Image.new("1", (self._width, self._height))
 
         # Get drawing object to draw on image.
         self._draw = ImageDraw.Draw(self._image)
@@ -33,20 +34,21 @@ class RpiOled:
         # font = ImageFont.truetype('Minecraftia.ttf', 8)
 
         self._top = PADDING
-        self._bottom = self._height-PADDING
-        self._x = 0
+        self._bottom = self._height - PADDING
 
         self._clear_screen()
 
     def _clear_screen(self):
         # Draw a black filled box to clear the image.
-        self._draw.rectangle((0,0,self._width,self._height), outline=0, fill=0)
+        self._draw.rectangle((0, 0, self._width, self._height), outline=0, fill=0)
 
     def set_line_txt(self, txt, line_idx):
-        self._clear_screen()
+        y_pos = (line_idx * LINE_HEIGHT) + self._top
 
-        y_pos = (line_idx * 8) + self._top
-        self._draw.text((self._x, y_pos),       txt,  font=self._font, fill=255)
-        # Display image.
+        # First, clear the line
+        self._draw.rectangle((0, y_pos, self._width, LINE_HEIGHT), outline=0, fill=0)
+        # Next, write out our text
+        self._draw.text((0, y_pos), txt, font=self._font, fill=255)
+        # Lastly, actually write the thing out
         self._disp.image(self._image)
         self._disp.display()
