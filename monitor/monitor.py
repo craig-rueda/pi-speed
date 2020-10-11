@@ -12,6 +12,7 @@ from websocket import WebSocketApp
 from monitor.util import console_log
 
 MESSAGE_SIZE_RE = re.compile("^([0-9]+)\n(.*)", re.S)
+ADDRESS_RE=re.compile("([^/]+)")
 KbPS = float(1000)
 MbPS = float(KbPS ** 2)  # 1,000,000
 GbPS = float(KbPS ** 3)  # 1,000,000,000
@@ -104,10 +105,12 @@ class Monitor:
 
         if interfaces:
             interface = interfaces[self._monitor_if]
-            if_addr = interface["addresses"][0]
             stats = interface["stats"]
             rx_bps = int(stats["rx_bps"]) * 8
             tx_bps = int(stats["tx_bps"]) * 8
+
+            if_addr_match = ADDRESS_RE.match(interface["addresses"][0])
+            if_addr = if_addr_match.group(1) if if_addr_match else "n/a"
 
             self._update_output(rx_bps, tx_bps, if_addr)
 
