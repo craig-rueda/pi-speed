@@ -1,7 +1,7 @@
 from os import path
 from typing import List
 
-from Adafruit_SSD1306 import SSD1306_128_32
+from Adafruit_SSD1306 import SSD1306_128_64
 from monitor.util import console_log
 from PIL import Image, ImageDraw, ImageFont
 
@@ -15,12 +15,13 @@ LINE_HEIGHT = 8
 
 class RpiOled:
     def __init__(self) -> None:
-        self._disp = SSD1306_128_32(rst=None)
+        self._disp = SSD1306_128_64(rst=None)
         # Initialize library.
         self._disp.begin()
         # Clear display.
         self._disp.clear()
         self._disp.display()
+        self._line_heights = [8, 10, 10]
 
         # Create blank image for drawing.
         # Make sure to create image with mode '1' for 1-bit color.
@@ -51,7 +52,8 @@ class RpiOled:
 
         # write all the lines
         for idx, line in enumerate(lines):
-            y_pos = self._top + (idx * LINE_HEIGHT)
+            line_height = self._line_heights[idx]
+            y_pos = self._top + (idx * line_height)
             self._draw.text((0, y_pos), line, font=self._font, fill=255)
 
         # Lastly, actually write the thing out
