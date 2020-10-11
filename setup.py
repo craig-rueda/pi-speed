@@ -18,7 +18,7 @@ setup(
         "Adafruit-GPIO==1.0.3",
         "Adafruit-SSD1306==1.6.2",
         "click==7.1.2",
-        "Pillow==7.2.0",
+        "Pillow==6.2.2",
         "requests==2.24.0",
         "websocket_client==0.57.0",
     ],

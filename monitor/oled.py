@@ -8,7 +8,7 @@ DC = 23
 SPI_PORT = 0
 SPI_DEVICE = 0
 PADDING = -2
-LINE_HEIGHT = 8
+LINE_HEIGHT = 20
 
 
 class RpiOled:

@@ -11,7 +11,7 @@ certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
 click==7.1.2              # via pi_internet (setup.py)
 idna==2.10                # via requests
-pillow==7.2.0             # via pi_internet (setup.py)
+pillow==6.2.2             # via pi_internet (setup.py)
 requests==2.24.0          # via pi_internet (setup.py)
 six==1.15.0               # via websocket-client
 urllib3==1.25.10          # via requests
