@@ -2,6 +2,7 @@ from os import path
 from typing import List
 
 from Adafruit_SSD1306 import SSD1306_128_32
+from monitor.util import console_log
 from PIL import Image, ImageDraw, ImageFont
 
 # Raspberry Pi pin configuration:
@@ -9,7 +10,7 @@ DC = 23
 SPI_PORT = 0
 SPI_DEVICE = 0
 PADDING = -2
-LINE_HEIGHT = 10
+LINE_HEIGHT = 8
 
 
 class RpiOled:
@@ -26,7 +27,7 @@ class RpiOled:
         self._width = self._disp.width
         self._height = self._disp.height
         self._image = Image.new("1", (self._width, self._height))
-
+        console_log(f"Detected display H/W [{self._height}/{self._width}]")
         # Get drawing object to draw on image.
         self._draw = ImageDraw.Draw(self._image)
 
