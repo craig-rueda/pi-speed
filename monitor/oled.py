@@ -7,8 +7,8 @@ from typing import List
 DC = 23
 SPI_PORT = 0
 SPI_DEVICE = 0
-PADDING = -2
-LINE_HEIGHT = 20
+PADDING = -1
+LINE_HEIGHT = 8
 
 
 class RpiOled:
