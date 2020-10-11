@@ -20,7 +20,7 @@ class RpiOled:
         # Clear display.
         self._disp.clear()
         self._disp.display()
-        self._line_heights = [16, 20, 24]
+        self._line_heights = [16, 20, 20]
 
         # Create blank image for drawing.
         # Make sure to create image with mode '1' for 1-bit color.
