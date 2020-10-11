@@ -111,8 +111,9 @@ class Monitor:
             self._update_output(rx_bps, tx_bps)
 
     def _update_output(self, rx_bps: int, tx_bps: int):
-        self._display.set_line_txt(f"Up: {self._human_bps(tx_bps)}", 0)
-        self._display.set_line_txt(f"Dn: {self._human_bps(rx_bps)}", 1)
+        self._display.update_display(
+            [f"Up: {self._human_bps(tx_bps)}", f"Dn: {self._human_bps(rx_bps)}"]
+        )
 
     @staticmethod
     def _human_bps(bps: int):

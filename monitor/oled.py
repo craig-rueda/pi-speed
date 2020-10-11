@@ -2,6 +2,8 @@ from Adafruit_SSD1306 import SSD1306_128_32
 from PIL import Image, ImageDraw, ImageFont
 
 # Raspberry Pi pin configuration:
+from typing import List
+
 DC = 23
 SPI_PORT = 0
 SPI_DEVICE = 0
@@ -42,13 +44,14 @@ class RpiOled:
         # Draw a black filled box to clear the image.
         self._draw.rectangle((0, 0, self._width, self._height), outline=0, fill=0)
 
-    def set_line_txt(self, txt, line_idx):
-        y_pos = (line_idx * LINE_HEIGHT) + self._top
+    def update_display(self, lines: List[str]):
+        self._clear_screen()
 
-        # First, clear the line
-        self._draw.rectangle((0, y_pos, self._width, LINE_HEIGHT + self._top), outline=0, fill=0)
-        # Next, write out our text
-        self._draw.text((0, y_pos), txt, font=self._font, fill=255)
+        # write all the lines
+        for idx, line in enumerate(lines):
+            y_pos = self._top + (idx * LINE_HEIGHT)
+            self._draw.text((0, y_pos), line, font=self._font, fill=255)
+
         # Lastly, actually write the thing out
         self._disp.image(self._image)
         self._disp.display()
