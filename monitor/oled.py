@@ -26,9 +26,6 @@ class RpiOled:
         # Get drawing object to draw on image.
         self._draw = ImageDraw.Draw(self._image)
 
-        # Draw a black filled box to clear the image.
-        self._draw.rectangle((0,0,self._width,self._height), outline=0, fill=0)
-
         self._font = ImageFont.load_default()
         # Alternatively load a TTF font.  Make sure the .ttf font file
         # is in the same directory as the python script!
@@ -39,7 +36,15 @@ class RpiOled:
         self._bottom = self._height-PADDING
         self._x = 0
 
+        self._clear_screen()
+
+    def _clear_screen(self):
+        # Draw a black filled box to clear the image.
+        self._draw.rectangle((0,0,self._width,self._height), outline=0, fill=0)
+
     def set_line_txt(self, txt, line_idx):
+        self._clear_screen()
+
         y_pos = (line_idx * 8) + self._top
         self._draw.text((self._x, y_pos),       txt,  font=self._font, fill=255)
         # Display image.
