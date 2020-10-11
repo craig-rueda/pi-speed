@@ -34,7 +34,7 @@ class RpiOled:
         # self._font = ImageFont.load_default()
         # Grabbed font from: http://www.dafont.com/bitmap.php
         self._font = ImageFont.truetype(
-            f"{path.dirname(__file__)}/Retron2000.ttf", 16
+            f"{path.dirname(__file__)}/Retron2000.ttf", 14
         )
 
         self._top = PADDING
