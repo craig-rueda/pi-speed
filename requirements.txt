@@ -4,11 +4,14 @@
 #
 #    pip-compile setup.py
 #
+adafruit-gpio==1.0.3      # via adafruit-ssd1306, pi_internet (setup.py)
+adafruit-pureio==1.1.6    # via adafruit-gpio
+adafruit-ssd1306==1.6.2   # via pi_internet (setup.py)
 certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
 click==7.1.2              # via pi_internet (setup.py)
-git+https://github.com/sn4k3/FakeRPi@0f30d320d5f715d8a4fb94e7105448508586ae94  # via pi_internet (setup.py)
 idna==2.10                # via requests
+pillow==7.2.0             # via pi_internet (setup.py)
 requests==2.24.0          # via pi_internet (setup.py)
 six==1.15.0               # via websocket-client
 urllib3==1.25.10          # via requests

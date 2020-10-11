@@ -15,9 +15,10 @@ setup(
     zip_safe=False,
     scripts=["monitor/bin/in_monitor"],
     install_requires=[
+        "Adafruit-GPIO==1.0.3",
+        "Adafruit-SSD1306==1.6.2",
         "click==7.1.2",
-        "fake-rpi @ git+https://github.com/sn4k3"
-        "/FakeRPi@0f30d320d5f715d8a4fb94e7105448508586ae94",
+        "Pillow==7.2.0",
         "requests==2.24.0",
         "websocket_client==0.57.0",
     ],

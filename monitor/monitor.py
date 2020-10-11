@@ -5,7 +5,7 @@ import ssl
 
 import time
 
-from monitor.lcd import RPiLcd
+from monitor.oled import RpiOled
 import requests
 from websocket import WebSocketApp
 
@@ -31,7 +31,7 @@ class Monitor:
         self._username = username
         self._password = password
         self._monitor_if = monitor_if
-        self._lcd = RPiLcd()
+        self._display = RpiOled()
         self._session_id = ""
         self._ws: WebSocketApp = None
         self._remaining_bytes = 0
@@ -111,8 +111,8 @@ class Monitor:
             self._update_output(rx_bps, tx_bps)
 
     def _update_output(self, rx_bps: int, tx_bps: int):
-        self._lcd.set_line_txt(f"Up: {self._human_bps(tx_bps)}", 1)
-        self._lcd.set_line_txt(f"Dn: {self._human_bps(rx_bps)}", 2)
+        self._display.set_line_txt(f"Up: {self._human_bps(tx_bps)}", 0)
+        self._display.set_line_txt(f"Dn: {self._human_bps(rx_bps)}", 1)
 
     @staticmethod
     def _human_bps(bps: int):
