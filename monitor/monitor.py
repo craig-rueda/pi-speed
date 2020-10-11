@@ -104,15 +104,20 @@ class Monitor:
 
         if interfaces:
             interface = interfaces[self._monitor_if]
+            if_addr = interface["addresses"][0]
             stats = interface["stats"]
             rx_bps = int(stats["rx_bps"]) * 8
             tx_bps = int(stats["tx_bps"]) * 8
 
-            self._update_output(rx_bps, tx_bps)
+            self._update_output(rx_bps, tx_bps, if_addr)
 
-    def _update_output(self, rx_bps: int, tx_bps: int):
+    def _update_output(self, rx_bps: int, tx_bps: int, address: str):
         self._display.update_display(
-            [f"Up: {self._human_bps(tx_bps)}", f"Dn: {self._human_bps(rx_bps)}"]
+            [
+                f"IP: {address}",
+                f"Up: {self._human_bps(tx_bps)}",
+                f"Dn: {self._human_bps(rx_bps)}",
+            ]
         )
 
     @staticmethod
