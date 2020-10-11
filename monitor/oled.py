@@ -10,7 +10,6 @@ DC = 23
 SPI_PORT = 0
 SPI_DEVICE = 0
 PADDING = -2
-LINE_HEIGHT = 8
 
 
 class RpiOled:
@@ -21,7 +20,7 @@ class RpiOled:
         # Clear display.
         self._disp.clear()
         self._disp.display()
-        self._line_heights = [8, 10, 10]
+        self._line_heights = [16, 20, 20]
 
         # Create blank image for drawing.
         # Make sure to create image with mode '1' for 1-bit color.
@@ -35,7 +34,7 @@ class RpiOled:
         # self._font = ImageFont.load_default()
         # Grabbed font from: http://www.dafont.com/bitmap.php
         self._font = ImageFont.truetype(
-            f"{path.dirname(__file__)}/Retron2000.ttf", LINE_HEIGHT
+            f"{path.dirname(__file__)}/Retron2000.ttf", 16
         )
 
         self._top = PADDING
