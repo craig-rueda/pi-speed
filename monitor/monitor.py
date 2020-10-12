@@ -2,14 +2,13 @@ import threading
 from json import dumps, loads
 import re
 import ssl
-
 import time
+import traceback
 
 from monitor.oled import RpiOled
+from monitor.util import console_log
 import requests
 from websocket import WebSocketApp
-
-from monitor.util import console_log
 
 MESSAGE_SIZE_RE = re.compile("^([0-9]+)\n(.*)", re.S)
 ADDRESS_RE = re.compile("([^/]+)")
@@ -52,6 +51,7 @@ class Monitor:
                 continue
 
             if self._ws:
+                console_log("Closing websocket", color="yellow")
                 self._ws.close()
 
             self._session_id = ""
@@ -158,36 +158,40 @@ class Monitor:
         self._keepalive = True
 
         console_log(f"Connecting to {self._router_url}...")
-        r = requests.post(
-            self._router_url,
-            {"username": self._username, "password": self._password},
-            allow_redirects=False,
-            verify=False,
-        )
-        auth_cookies = r.cookies
-        # Make sure we're actually good to go by hitting a protected URL...
-        r = requests.get(
-            f"{self._router_url}/api/edge/data.json?data=dhcp_leases",
-            cookies=auth_cookies,
-            verify=False,
-        )
 
-        if r.status_code != 200:
-            # Something went wrong
-            raise InvalidLoginException()
+        try:
+            r = requests.post(
+                self._router_url,
+                {"username": self._username, "password": self._password},
+                allow_redirects=False,
+                verify=False,
+            )
+            auth_cookies = r.cookies
+            # Make sure we're actually good to go by hitting a protected URL...
+            r = requests.get(
+                f"{self._router_url}/api/edge/data.json?data=dhcp_leases",
+                cookies=auth_cookies,
+                verify=False,
+            )
 
-        cookie_header_str = "; ".join(
-            [f"{cookie[0]}={cookie[1]}" for cookie in auth_cookies.items()]
-        )
-        self._session_id = auth_cookies["PHPSESSID"]
-        self._ws = WebSocketApp(
-            "wss://192.168.5.1/ws/stats",
-            cookie=cookie_header_str,
-            on_message=self.on_ws_message,
-            on_error=self.on_ws_error,
-            on_close=self.on_ws_close,
-            on_open=self.on_ws_open,
-        )
-        self._ws.run_forever(
-            ping_interval=10, sslopt={"cert_reqs": ssl.VerifyMode.CERT_NONE}
-        )
+            if r.status_code != 200:
+                # Something went wrong
+                raise InvalidLoginException()
+
+            cookie_header_str = "; ".join(
+                [f"{cookie[0]}={cookie[1]}" for cookie in auth_cookies.items()]
+            )
+            self._session_id = auth_cookies["PHPSESSID"]
+            self._ws = WebSocketApp(
+                "wss://192.168.5.1/ws/stats",
+                cookie=cookie_header_str,
+                on_message=self.on_ws_message,
+                on_error=self.on_ws_error,
+                on_close=self.on_ws_close,
+                on_open=self.on_ws_open,
+            )
+            self._ws.run_forever(
+                ping_interval=10, sslopt={"cert_reqs": ssl.VerifyMode.CERT_NONE}
+            )
+        except Exception as e:
+            console_log(traceback.format_exc(), color="red")
