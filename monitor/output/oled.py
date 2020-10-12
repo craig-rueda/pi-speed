@@ -2,6 +2,7 @@ from os import path
 from typing import List
 
 from Adafruit_SSD1306 import SSD1306_128_64
+from monitor.output.base import OutputDevice
 from monitor.util import console_log
 from PIL import Image, ImageDraw, ImageFont
 
@@ -12,7 +13,7 @@ SPI_DEVICE = 0
 PADDING = -2
 
 
-class RpiOled:
+class RpiOled(OutputDevice):
     def __init__(self) -> None:
         self._disp = SSD1306_128_64(rst=None)
         # Initialize library.

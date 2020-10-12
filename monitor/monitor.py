@@ -1,11 +1,12 @@
-import threading
 from json import dumps, loads
 import re
 import ssl
+import threading
 import time
 import traceback
 
-from monitor.oled import RpiOled
+from monitor.output.base import ConsoleOutputDevice
+from monitor.output.oled import RpiOled
 from monitor.util import console_log
 import requests
 from websocket import WebSocketApp
@@ -24,14 +25,18 @@ class InvalidLoginException(Exception):
 
 class Monitor:
     def __init__(
-        self, router_url: str, monitor_if: str, username: str, password: str
+        self,
+        router_url: str,
+        monitor_if: str,
+        username: str,
+        password: str,
+        console_only: bool = False,
     ) -> None:
-        self._keepalive = False
         self._router_url = router_url
         self._username = username
         self._password = password
         self._monitor_if = monitor_if
-        self._display = RpiOled()
+        self._display = ConsoleOutputDevice() if console_only else RpiOled()
         self._session_id = ""
         self._ws: WebSocketApp = None
         self._remaining_bytes = 0
@@ -39,27 +44,27 @@ class Monitor:
 
         # The API only allows us to receive messages for 20min at a time,
         # so this thread will periodically restart the connection
-        thread = threading.Thread(target=self._restart_run)
-        thread.setDaemon(True)
-        thread.start()
+        self._monitor_thread = threading.Thread(target=self._monitor_run)
+        self._monitor_thread.setDaemon(True)
+        self._worker_thread = None
 
-    def _restart_run(self):
+    def _monitor_run(self):
         while True:
-            time.sleep(RESTART_INT_SECS)
-
-            if not self._keepalive:
-                continue
-
-            if self._ws:
+            if self._worker_thread and self._worker_thread.is_alive():
                 console_log("Closing websocket", color="yellow")
                 self._ws.close()
+                self._worker_thread.join(60)
 
             self._session_id = ""
             self._ws: WebSocketApp = None
             self._remaining_bytes = 0
             self._partial_message = ""
 
-            self.login_and_connect()
+            self._worker_thread = threading.Thread(target=self._do_login_and_connect)
+            self._worker_thread.setDaemon(True)
+            self._worker_thread.start()
+
+            time.sleep(RESTART_INT_SECS)
 
     def on_ws_message(self, message: str):
         if self._remaining_bytes:
@@ -155,6 +160,10 @@ class Monitor:
         self.login_and_connect()
 
     def login_and_connect(self):
+        self._monitor_thread.start()
+        self._monitor_thread.join()
+
+    def _do_login_and_connect(self):
         self._keepalive = True
 
         console_log(f"Connecting to {self._router_url}...")
@@ -193,5 +202,5 @@ class Monitor:
             self._ws.run_forever(
                 ping_interval=10, sslopt={"cert_reqs": ssl.VerifyMode.CERT_NONE}
             )
-        except Exception as e:
+        except Exception:
             console_log(traceback.format_exc(), color="red")

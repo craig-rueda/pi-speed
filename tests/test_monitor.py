@@ -28,12 +28,8 @@ class MonitorTest(TestCase):
         self._monitor._update_output.assert_called_with(2473590, 260240)
 
     def test_multiple_frame_with_naked_header(self):
-        self._monitor.on_ws_message(
-            self._read_sample("multi_frame_message_naked_1.txt")
-        )
-        self._monitor.on_ws_message(
-            self._read_sample("multi_frame_message_naked_2.txt")
-        )
+        self._monitor.on_ws_message(self._read_sample("multi_frame_message_naked_1.txt"))
+        self._monitor.on_ws_message(self._read_sample("multi_frame_message_naked_2.txt"))
         self._monitor._update_output.assert_called_once()
         self._monitor._update_output.assert_called_with(713560, 64530)
 
