@@ -25,7 +25,11 @@ def monitor():
     "--password", default="ubnt", prompt="Password to login to the admin console"
 )
 @click.option(
-    "--console-only", "-c", is_flag=True, prompt="If set, only output to console"
+    "--console-only",
+    "-c",
+    default=False,
+    is_flag=True,
+    help="If set, only output to console",
 )
 def start(
     router_url: str, interface: str, username: str, password: str, console_only: bool
